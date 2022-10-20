@@ -1,10 +1,10 @@
-const Member = require("../models/Member");
+const Member = require("../models/member");
 
 exports.welcome = (req, res) => {
   res.status(200).send("welcome to new backend");
 };
 
-//! to create a member
+//to create a member
 exports.createMember = async (req, res) => {
   try {
     const { name, dateofjoining, contact, feestatus } = req.body;
@@ -35,7 +35,7 @@ exports.createMember = async (req, res) => {
   }
 };
 
-//! to delete a member
+// to delete a member
 
 exports.deleteMember = async (req, res) => {
   try {
@@ -58,7 +58,7 @@ exports.deleteMember = async (req, res) => {
   }
 };
 
-//! to get all member
+// to get all member
 exports.getAllMembers = async (req, res) => {
   try {
     const allMembers = await Member.find({});

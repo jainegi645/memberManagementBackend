@@ -23,4 +23,4 @@ const memberSchema = new Schema({
         default:null
     }
 })
-module.exports = mongoose.model('Member',memberSchema)
+module.exports = mongoose.model('member',memberSchema)

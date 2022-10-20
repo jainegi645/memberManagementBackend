@@ -8,4 +8,4 @@ const attendenceSchema = new Schema({
   memberAttendence: [{ _id: Number, name: String, markAs: String }],
 });
 
-module.exports = mongoose.model("Attendence", attendenceSchema);
+module.exports = mongoose.model("attendence", attendenceSchema);
