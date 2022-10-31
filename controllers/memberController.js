@@ -7,10 +7,9 @@ exports.welcome = (req, res) => {
 //to create a member
 exports.createMember = async (req, res) => {
   try {
-    const { name, dateofjoining, contact, feestatus } = req.body;
-
+    const { name, dateofjoining, contact, feeStatus } = req.body;
     //retriving data from body
-    if (!(name && contact && feestatus && dateofjoining)) {
+    if (!(name && contact && feeStatus && dateofjoining)) {
       res.status(400).send("all fields are mandatory");
     }
 
@@ -24,11 +23,12 @@ exports.createMember = async (req, res) => {
         name,
         dateofjoining,
         contact,
-        feestatus,
+        feeStatus,
       });
 
       //sending response back
       res.status(200).send("member added succesfully");
+      // res.send(member);
     }
   } catch (error) {
     console.log(error);
@@ -39,11 +39,11 @@ exports.createMember = async (req, res) => {
 
 exports.deleteMember = async (req, res) => {
   try {
-    const { name, contact } = req.body;
+    const { contact } = req.body;
 
     //retriving data from body
-    if (!(name && contact)) {
-      res.status(400).send("require name and contact to delete member");
+    if (!contact) {
+      res.status(400).send("require contact to delete member");
     }
 
     const memberExists = await Member.findOne({ contact });
@@ -68,9 +68,30 @@ exports.getAllMembers = async (req, res) => {
   }
 };
 
-exports.example = async (req, res) => {
+exports.updateMember = async (req, res) => {
   try {
-    res.status(200).send("example");
+    const { name, contact, feeStatus, dateofjoining } = req.body;
+    if (!name) {
+      const filter = { contact };
+      const update = { feeStatus, dateofjoining };
+      const updateMember = await Member.findOneAndUpdate(filter, update);
+      res.status(200).send("member updated succesfully");
+    } else if (!feeStatus) {
+      const filter = { contact };
+      const update = { name, dateofjoining };
+      const updateMember = await Member.findOneAndUpdate(filter, update);
+      res.status(200).send("member updated succesfully");
+    } else if (!dateofjoining) {
+      const filter = { contact };
+      const update = { name, feeStatus };
+      const updateMember = await Member.findOneAndUpdate(filter, update);
+      res.status(200).send("member updated succesfully");
+    } else {
+      const filter = { contact };
+      const update = { name, feeStatus, dateofjoining };
+      const updateMember = await Member.findOneAndUpdate(filter, update);
+      res.status(200).send("member updated succesfully");
+    }
   } catch (error) {
     console.log(error);
   }
