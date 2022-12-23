@@ -52,3 +52,24 @@ exports.getAttendence = async (req, res) => {
     console.log(error);
   }
 };
+
+exports.getAttendenceByContact = async (req, res) => {
+  try {
+    const { contact } = req.body;
+    if (contact) {
+      const allMembers = await Attendence.find({});
+      const result = allMembers.filter((elem) =>
+        elem.memberAttendence.some((item) => item.contact === contact)
+      );
+      const dates = result.map((item) => item.date);
+      if (dates.length === 0) {
+        res.status(200).send({ message: "no record found" });
+      }
+      res.status(200).send({ dates, count: dates.length });
+    } else {
+      res.status(200).send({ message: "contact is mandatory" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
